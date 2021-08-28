@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e40f0ea6e0f3e418763a9e9b5cab64, type: 3}
+  m_Name: UB_Grid
+  m_EditorClassIdentifier: 
+  m_BaseMaterial0Colour: {r: 0.1989977, g: 0.16509432, b: 1, a: 1}
+  BaseMaterial0: {fileID: 2100000, guid: c3ede7e6c2eb3d5439882385f0f8e078, type: 2}
+  m_BaseMaterial1Colour: {r: 0.5896226, g: 0.62692964, b: 1, a: 1}
+  BaseMaterial1: {fileID: 2100000, guid: d80fbe81ed214714ca323785484c253d, type: 2}
