@@ -10,12 +10,14 @@ namespace HPP.Grid
     [CreateAssetMenu(fileName = "Grid Colour Pallete", menuName = "ScriptableObjects/GridColourPallete")]
     public class GridColourPallete : ScriptableObject
     {
-        [Header("Mat 0")]
+        [Header("Variant 0")]
         public Material BaseMaterial0;
-        public Material HighlightMaterial0;
+        public Color BaseColour0;
+        public Color HighlightColour0;
 
-        [Header("Mat 1")]
+        [Header("Varaint 1")]
         public Material BaseMaterial1;
-        public Material HighlightMaterial1;
+        public Color BaseColour1;
+        public Color HighlightColour1;
     }
 }
