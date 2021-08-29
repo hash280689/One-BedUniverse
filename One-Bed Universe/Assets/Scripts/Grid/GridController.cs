@@ -19,6 +19,7 @@ namespace HPP.Grid
         [SerializeField] private BoxCollider m_BoxCollider;
         [SerializeField] private List<GridItem> m_GridItems;
 
+        public List<GridItem> GridItems => m_GridItems;
         private const float M_GRID_ITEM_Y_SCALE = 1;
         private bool m_IsBaseColour0 = false;
         
