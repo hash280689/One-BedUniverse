@@ -119,6 +119,25 @@ namespace HPP.Grid
             return closestGridItem;
         }
 
+        public GridItem GetClosestGridItemToPoint(Vector3 point, UniverseType ? universeType = null)
+        {
+            float closestDistance = Mathf.Infinity;
+            GridItem closestGridItem = null;
+            for (int i = 0; i < m_GridItems.Count; i++)
+            {
+                if (universeType == null || (universeType != null && universeType == m_GridItems[i].GridUniverseType))
+                {
+                    float newDistance = Vector3.Distance(point, m_GridItems[i].transform.position);
+                    if (newDistance < closestDistance)
+                    {
+                        closestGridItem = m_GridItems[i];
+                        closestDistance = newDistance;
+                    }
+                }
+            }
+            return closestGridItem;
+        }
+
         public List<GridItem> GetAdjacentGridItems(GridItem gridItem, bool useDiagonal = true)
         {
             List<GridItem> adjacentGridItems = new List<GridItem>();

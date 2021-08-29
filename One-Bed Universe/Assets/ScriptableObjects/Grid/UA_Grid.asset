@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BaseMaterial0: {fileID: 2100000, guid: 32bc3be97a6034a46bdc1f3600867ecb, type: 2}
   BaseColour0: {r: 1, g: 0.23137255, b: 0.23137255, a: 1}
-  HighlightColour0: {r: 0.990566, g: 0.52799034, b: 0.52799034, a: 1}
+  HighlightColour0: {r: 1, g: 0, b: 0, a: 1}
   BaseMaterial1: {fileID: 2100000, guid: 9787dfc002638044a84e3eb990255c8b, type: 2}
   BaseColour1: {r: 0.98039216, g: 0.54901963, b: 0.54901963, a: 1}
-  HighlightColour1: {r: 1, g: 0.740566, b: 0.740566, a: 1}
+  HighlightColour1: {r: 0.990566, g: 0.81768423, b: 0.81768423, a: 1}
