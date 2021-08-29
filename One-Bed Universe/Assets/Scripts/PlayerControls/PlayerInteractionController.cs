@@ -35,16 +35,23 @@ namespace HPP.PlayerControls
             GameManager.Instance.OnPlayerChanged += OnPlayerChanged;
         }
 
+        void Update()
+        {
+            FirstPasRayCast();
+
+            //FOR TESTING
+            if (Input.GetMouseButtonDown(0))
+            {
+                DoReclaimationAction();
+            }
+        }
+
         private void OnPlayerChanged(UniverseType playerUniverseType)
         {
             m_CurrentPlayerUniverseType = playerUniverseType;
         }
 
         // Update is called once per frame
-        void Update()
-        {
-            FirstPasRayCast();
-        }
 
         private void FirstPasRayCast()
         {
@@ -104,6 +111,19 @@ namespace HPP.PlayerControls
                 m_HighlightedGridItems.Add(adjacentTiles[i]);
             }
         }    
+
+        private void DoReclaimationAction()
+        {
+            if (m_FirstPassRaycastHit == null || m_HighlightedGridItems.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < m_HighlightedGridItems.Count; i++)
+            {
+                m_HighlightedGridItems[i].SetUniverseType(m_CurrentPlayerUniverseType);
+            }
+        }
 
         private RaycastHit ? DoRayCast(LayerMask layerMask)
         {
