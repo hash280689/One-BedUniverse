@@ -43,6 +43,7 @@ namespace HPP.PlayerControls
             if (Input.GetMouseButtonDown(0))
             {
                 DoReclaimationAction();
+                m_CurrentGridItem = null;
             }
         }
 
