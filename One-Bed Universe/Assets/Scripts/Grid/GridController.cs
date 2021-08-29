@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using static HPP.GlobalEnums;
 
 namespace HPP.Grid
 {
@@ -39,20 +40,20 @@ namespace HPP.Grid
 
                 for (int y = 0; y < m_YCount; y++)
                 {
-                    GridItem.UniverseType universeType = GridItem.UniverseType.Neutral;
+                    UniverseType universeType = UniverseType.Neutral;
 
                     if (y < m_YCount / 2)
                     {
-                        universeType = GridItem.UniverseType.UniverseA;
+                        universeType = UniverseType.UniverseA;
                     }
                     else
                     {
-                        universeType = GridItem.UniverseType.UniverseB;
+                        universeType = UniverseType.UniverseB;
                     }
 
                     if (m_YCount%2 == 1 && y == ((m_YCount - 1)/2))
                     {
-                        universeType = GridItem.UniverseType.Neutral;
+                        universeType = UniverseType.Neutral;
                     }
 
                     m_GridItems.Add(InitialiseGridItem(x,y, universeType));
@@ -62,7 +63,7 @@ namespace HPP.Grid
             m_BoxCollider.size = new Vector3(m_XCount * m_GridItemSize, M_GRID_ITEM_Y_SCALE, m_YCount * m_GridItemSize);
         }
 
-        private GridItem InitialiseGridItem(int xRef, int yRef, GridItem.UniverseType universeType = GridItem.UniverseType.Neutral)
+        private GridItem InitialiseGridItem(int xRef, int yRef, UniverseType universeType = UniverseType.Neutral)
         {
             GridItem newGridItem = Instantiate(m_GridItemPrefab).GetComponent<GridItem>();
             newGridItem.gameObject.name = "G-" + xRef + "-" + yRef;

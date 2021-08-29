@@ -12,20 +12,20 @@ namespace HPP.Grid
     {
         [Header("Mat 0")]
         public Material BaseMaterial0;
-        public Color m_BaseMaterial0Colour;
-        public Color m_Highlight0Colour;
+        public Color BaseColour0;
+        public Color HighlightColour0;
 
         [Header("Mat 1")]
         public Material BaseMaterial1;
-        public Color m_BaseMaterial1Colour;
-        public Color m_Highlight1Colour;
+        public Color BaseColour1;
+        public Color HighlightColour1;
 
 
         [ContextMenu("Update Materials")]
         public void UpdateMaterialColours()
         {
-            BaseMaterial0.color = m_BaseMaterial0Colour;
-            BaseMaterial1.color = m_BaseMaterial1Colour;
+            BaseMaterial0.color = BaseColour0;
+            BaseMaterial1.color = BaseColour1;
         }
 
         private void Awake()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static HPP.GlobalEnums;
 
 namespace HPP.PlayerControls
 {
@@ -11,7 +12,6 @@ namespace HPP.PlayerControls
     /// </summary>
     public class CursorBehaviourController : MonoBehaviour
     {
-        public enum InteractionType { DefaultState, BasicTileHit, InteractableHover, ReclaimationIndicator}
         private InteractionType m_InteractionType;
 
         [SerializeField] private float m_YOffset = 0;
@@ -27,7 +27,7 @@ namespace HPP.PlayerControls
         public UnityEvent OnInteractableHover;
         public UnityEvent OnReclamationIndicator;
 
-        private GridItem.UniverseType m_CurrentUniverseType;
+        private UniverseType m_CurrentUniverseType;
         private InteractionType m_CurrentInteractionType;
 
         public void SetToGridItem(GridItem gridItem)
@@ -36,7 +36,7 @@ namespace HPP.PlayerControls
 
         }
 
-        public void SetUniverseType(GridItem.UniverseType universeType, bool force = false)
+        public void SetUniverseType(UniverseType universeType, bool force = false)
         {
             if (!force && m_CurrentUniverseType == universeType)
             {
@@ -45,13 +45,13 @@ namespace HPP.PlayerControls
 
             switch (universeType)
             {
-                case GridItem.UniverseType.Neutral:
+                case UniverseType.Neutral:
                     OnNeutral.Invoke();
                     break;
-                case GridItem.UniverseType.UniverseA:
+                case UniverseType.UniverseA:
                     OnUniverseA.Invoke();
                     break;
-                case GridItem.UniverseType.UniverseB:
+                case UniverseType.UniverseB:
                     OnUniverseB.Invoke();
                     break;
             }
@@ -74,10 +74,10 @@ namespace HPP.PlayerControls
                 case InteractionType.BasicTileHit:
                     OnBasicTyleHit.Invoke();
                     break;
-                case InteractionType.InteractableHover:
+                case InteractionType.Interactable:
                     OnInteractableHover.Invoke();
                     break;
-                case InteractionType.ReclaimationIndicator:
+                case InteractionType.Reclaimable:
                     OnReclamationIndicator.Invoke();
                     break;
             }
