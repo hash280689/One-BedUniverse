@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static HPP.GlobalEnums;
 
 namespace HPP.Grid
 {
@@ -15,9 +16,7 @@ namespace HPP.Grid
         [SerializeField] GridColourPallete m_UAColourPallete;
         [SerializeField] GridColourPallete m_UBColourPallete;
         [SerializeField] MeshRenderer m_GridItemMeshRenderer;
-        [SerializeField] MeshRenderer m_HoverRenderer;
 
-        public enum UniverseType { Neutral, UniverseA, UniverseB}
         public enum ColourVariant { Variant0, Variant1}
 
         private UniverseType m_UniverseType;
@@ -30,12 +29,6 @@ namespace HPP.Grid
 
         public int XRef => m_XRef;
         public int YRef => m_YRef;
-
-
-        private void Awake()
-        {
-            m_HoverRenderer.enabled = false;
-        }
 
         private GridColourPallete GetColourPallete(UniverseType universeType)
         {
@@ -52,27 +45,65 @@ namespace HPP.Grid
             }
         }
 
+        private Material GetBaseMaterial(ColourVariant colourVariant, UniverseType universeType)
+        {
+            GridColourPallete colourPallete = GetColourPallete(universeType);
+            return colourVariant == ColourVariant.Variant0 ?
+                colourPallete.BaseMaterial0 :
+                colourPallete.BaseMaterial1;
+        }
+
+        private Color GetBaseColor(ColourVariant colourVariant, UniverseType universeType)
+        {
+            GridColourPallete colourPallete = GetColourPallete(universeType);
+            return colourVariant == ColourVariant.Variant0 ?
+                colourPallete.BaseColour0 :
+                colourPallete.BaseColour1;
+        }
+        private Color GetHighlightColor(ColourVariant colourVariant, UniverseType universeType)
+        {
+            GridColourPallete colourPallete = GetColourPallete(universeType);
+            return colourVariant == ColourVariant.Variant0 ?
+                colourPallete.HighlightColour0 :
+                colourPallete.HighlightColour1;
+        }
+
+
+
         public void SetListRefs(int xRef, int yRef)
         {
             m_XRef = xRef;
             m_YRef = yRef;
         }
 
-        public void SetGridItemProperties(ColourVariant colourVariant, UniverseType universeType)
+        public void SetGridItemProperties(ColourVariant colourVariant, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
-            GridColourPallete colourPallete = GetColourPallete(universeType);
-            m_GridItemMeshRenderer.material =
-                colourVariant == ColourVariant.Variant0 ?
-                colourPallete.BaseMaterial0 :
-                colourPallete.BaseMaterial1;
-
+            m_GridItemMeshRenderer.material = GetBaseMaterial(colourVariant, universeType);
+            SetInteractiveStatus(interactionType);
             m_UniverseType = universeType;
             m_ColourVariant = colourVariant;
         }
 
-        public void SetGridItemProperties(bool isBaseColour0, UniverseType universeType)
+        public void SetGridItemProperties(bool isBaseColour0, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
-            SetGridItemProperties(isBaseColour0 ? ColourVariant.Variant0 : ColourVariant.Variant1, universeType);
+            SetGridItemProperties(isBaseColour0 ? ColourVariant.Variant0 : ColourVariant.Variant1, universeType, interactionType);
+        }
+
+        public void SetInteractiveStatus(InteractionType interactionType)
+        {
+            switch (interactionType)
+            {
+                case InteractionType.DefaultState:
+                    m_GridItemMeshRenderer.material.color = GetBaseColor(m_ColourVariant, m_UniverseType);
+                    break;
+                case InteractionType.BasicTileHit:
+                    //break;
+                case InteractionType.Interactable:
+                    //break;
+                case InteractionType.Reclaimable:
+                    m_GridItemMeshRenderer.material.color = GetHighlightColor(m_ColourVariant, m_UniverseType);
+                    break;
+            }
         }
 
         public void SetUniverseType(UniverseType universeType)
