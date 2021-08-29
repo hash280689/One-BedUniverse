@@ -19,6 +19,7 @@ namespace HPP.Grid
         [SerializeField] private BoxCollider m_BoxCollider;
         [SerializeField] private List<GridItem> m_GridItems;
 
+        public List<GridItem> GridItems => m_GridItems;
         private const float M_GRID_ITEM_Y_SCALE = 1;
         private bool m_IsBaseColour0 = false;
         
@@ -73,7 +74,7 @@ namespace HPP.Grid
             newGridItem.SetListRefs(xRef, yRef);
             newGridItem.SetLocalPosition(xPos, yPos);
             newGridItem.transform.parent = m_GridItemContainer;
-            newGridItem.SetGridItemProperties(m_IsBaseColour0, universeType);
+            newGridItem.SetGridItemProperties(m_IsBaseColour0, universeType, InteractionType.Null);
             return newGridItem;
         }
 

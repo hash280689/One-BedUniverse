@@ -9,7 +9,7 @@ namespace HPP
     /// </summary>
     public class GlobalEnums
     {
-        public enum InteractionType { DefaultState, BasicTileHit, Interactable, Reclaimable }
+        public enum InteractionType { DefaultState, BasicTileHit, Interactable, Reclaimable, Null}
         public enum UniverseType { Neutral, UniverseA, UniverseB }
     }
 }

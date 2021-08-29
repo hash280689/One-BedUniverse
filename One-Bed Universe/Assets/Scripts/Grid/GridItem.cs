@@ -19,13 +19,14 @@ namespace HPP.Grid
 
         public enum ColourVariant { Variant0, Variant1}
 
-        private UniverseType m_UniverseType;
-        private ColourVariant m_ColourVariant;
+        [SerializeField] private UniverseType m_UniverseType;
+        [SerializeField] private ColourVariant m_ColourVariant;
 
         public UniverseType GridUniverseType => m_UniverseType;
         public ColourVariant GridColourVariant => m_ColourVariant;
 
-        private int m_XRef, m_YRef;
+        [SerializeField] private int m_XRef;
+        [SerializeField] private int m_YRef;
 
         public int XRef => m_XRef;
         public int YRef => m_YRef;
@@ -53,22 +54,21 @@ namespace HPP.Grid
                 colourPallete.BaseMaterial1;
         }
 
-        private Color GetBaseColor(ColourVariant colourVariant, UniverseType universeType)
+        private Color GetBaseColour(ColourVariant colourVariant, UniverseType universeType)
         {
             GridColourPallete colourPallete = GetColourPallete(universeType);
             return colourVariant == ColourVariant.Variant0 ?
                 colourPallete.BaseColour0 :
                 colourPallete.BaseColour1;
         }
-        private Color GetHighlightColor(ColourVariant colourVariant, UniverseType universeType)
+
+        private Color GetHighlightColour(ColourVariant colourVariant, UniverseType universeType)
         {
             GridColourPallete colourPallete = GetColourPallete(universeType);
             return colourVariant == ColourVariant.Variant0 ?
                 colourPallete.HighlightColour0 :
                 colourPallete.HighlightColour1;
         }
-
-
 
         public void SetListRefs(int xRef, int yRef)
         {
@@ -79,7 +79,10 @@ namespace HPP.Grid
         public void SetGridItemProperties(ColourVariant colourVariant, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
             m_GridItemMeshRenderer.material = GetBaseMaterial(colourVariant, universeType);
-            SetInteractiveStatus(interactionType);
+            if (interactionType != InteractionType.Null)
+            {
+                SetInteractiveStatus(interactionType);
+            }
             m_UniverseType = universeType;
             m_ColourVariant = colourVariant;
         }
@@ -94,14 +97,14 @@ namespace HPP.Grid
             switch (interactionType)
             {
                 case InteractionType.DefaultState:
-                    m_GridItemMeshRenderer.material.color = GetBaseColor(m_ColourVariant, m_UniverseType);
+                    m_GridItemMeshRenderer.material.color = GetBaseColour(m_ColourVariant, m_UniverseType);
                     break;
                 case InteractionType.BasicTileHit:
                     //break;
                 case InteractionType.Interactable:
                     //break;
                 case InteractionType.Reclaimable:
-                    m_GridItemMeshRenderer.material.color = GetHighlightColor(m_ColourVariant, m_UniverseType);
+                    m_GridItemMeshRenderer.material.color = GetHighlightColour(m_ColourVariant, m_UniverseType);
                     break;
             }
         }

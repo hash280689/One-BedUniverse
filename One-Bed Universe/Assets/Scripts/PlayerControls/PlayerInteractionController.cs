@@ -2,6 +2,7 @@ using HPP.Grid;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static HPP.GlobalEnums;
 
 namespace HPP.PlayerControls
 {
@@ -16,6 +17,7 @@ namespace HPP.PlayerControls
         [SerializeField] private float m_MaxRayDistance = 10;
 
         private GridItem m_CurrentGridItem = null;
+        //private GridController currentGridController = null;
 
         private void Awake()
         {
@@ -46,6 +48,19 @@ namespace HPP.PlayerControls
                     }
 
                     m_3DCursor.SetToGridItem(closestGridItem);
+
+                    //FOR TESTING
+
+                    for (int i = 0; i < gridController.GridItems.Count; i++)
+                    {
+                        gridController.GridItems[i].SetInteractiveStatus(InteractionType.DefaultState);
+                    }
+                    var adjacentTiles = gridController.GetAdjacentGridItems(closestGridItem, true);
+                    closestGridItem.SetInteractiveStatus(InteractionType.Reclaimable);
+                    for (int i = 0; i < adjacentTiles.Count; i++)
+                    {
+                        adjacentTiles[i].SetInteractiveStatus(InteractionType.Reclaimable);
+                    }
                     m_CurrentGridItem = closestGridItem;
                 }
                 else

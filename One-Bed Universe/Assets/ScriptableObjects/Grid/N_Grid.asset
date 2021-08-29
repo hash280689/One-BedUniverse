@@ -15,6 +15,8 @@ MonoBehaviour:
   BaseMaterial0: {fileID: 2100000, guid: 195de3f23f084ba40b69beb328108bcb, type: 2}
   BaseColour0: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   HighlightColour0: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+  HighlightMaterial0: {fileID: 2100000, guid: 7e8ce72875fa18a488c3edb0bdaf24a0, type: 2}
   BaseMaterial1: {fileID: 2100000, guid: ad160cf6ad55c5348a5bd25bdbce00ef, type: 2}
-  BaseColour1: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
+  BaseColour1: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
   HighlightColour1: {r: 0.8584906, g: 0.8382432, b: 0.8382432, a: 1}
+  HighlightMaterial1: {fileID: 2100000, guid: 2e2555eaf43987b499b31aefeccfc372, type: 2}
