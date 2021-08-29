@@ -79,7 +79,10 @@ namespace HPP.Grid
         public void SetGridItemProperties(ColourVariant colourVariant, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
             m_GridItemMeshRenderer.material = GetBaseMaterial(colourVariant, universeType);
-            SetInteractiveStatus(interactionType);
+            if (interactionType != InteractionType.Null)
+            {
+                SetInteractiveStatus(interactionType);
+            }
             m_UniverseType = universeType;
             m_ColourVariant = colourVariant;
         }

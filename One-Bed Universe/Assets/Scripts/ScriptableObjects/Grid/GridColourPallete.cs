@@ -28,9 +28,5 @@ namespace HPP.Grid
             BaseMaterial1.color = BaseColour1;
         }
 
-        private void Awake()
-        {
-            UpdateMaterialColours();
-        }
     }
 }

@@ -153,6 +153,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_YOffset: 0
+  OnNeutral:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUniverseA:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUniverseB:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDefaultState:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBasicTyleHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInteractableHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReclamationIndicator:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &42088316
 Transform:
   m_ObjectHideFlags: 0
@@ -579,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3567802527241347957, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_GridItems.Array.size
-      value: 0
+      value: 225
       objectReference: {fileID: 0}
     - target: {fileID: 3567802527241347957, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_GridItems.Array.data[0]
@@ -2347,15 +2368,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5433170865375771785, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_Size.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5433170865375771785, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_Size.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5433170865375771785, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_Size.z
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9157613070734839923, guid: 08b0133126dd604469ce73270da5448e, type: 3}
       propertyPath: m_Name

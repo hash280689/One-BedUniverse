@@ -73,7 +73,7 @@ namespace HPP.Grid
             newGridItem.SetListRefs(xRef, yRef);
             newGridItem.SetLocalPosition(xPos, yPos);
             newGridItem.transform.parent = m_GridItemContainer;
-            newGridItem.SetGridItemProperties(m_IsBaseColour0, universeType);
+            newGridItem.SetGridItemProperties(m_IsBaseColour0, universeType, InteractionType.Null);
             return newGridItem;
         }
 
