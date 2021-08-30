@@ -1,3 +1,4 @@
+using HPP.PlayerControls;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +10,7 @@ namespace HPP.CameraControls
     /// </summary>
     public class CameraMandKContols : MonoBehaviour
     {
-
-        //TO DO: Put this is a scriptable object so it can be saved in runtime;
-        public KeyCode CameraClockwise = KeyCode.E;
-        public KeyCode CameraAntiClockwise = KeyCode.Q;
-        public KeyCode CameraZoomIn = KeyCode.W;
-        public KeyCode CameraZoomOut = KeyCode.S;
-
+        [SerializeField] KeyboardConfig m_KeyboardConfig;
         private void Update()
         {
             if (CameraManager.Instance == null)
@@ -23,22 +18,22 @@ namespace HPP.CameraControls
                 return;
             }
 
-            if (Input.GetKeyDown(CameraClockwise))
+            if (Input.GetKeyDown(m_KeyboardConfig.CameraClockwise))
             {
                 CameraManager.Instance.MoveCamAntiClockwise();
             }
 
-            if (Input.GetKeyDown(CameraAntiClockwise))
+            if (Input.GetKeyDown(m_KeyboardConfig.CameraAntiClockwise))
             {
                 CameraManager.Instance.MoveCamClockwise();
             }
 
-            if (Input.GetKeyDown(CameraZoomIn))
+            if (Input.GetKeyDown(m_KeyboardConfig.CameraZoomIn))
             {
                 CameraManager.Instance.UseZoomedInCam();
             }
 
-            if (Input.GetKeyDown(CameraZoomOut))
+            if (Input.GetKeyDown(m_KeyboardConfig.CameraZoomOut))
             {
                 CameraManager.Instance.UseMainCam();
             }
