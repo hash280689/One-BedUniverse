@@ -15,7 +15,7 @@ namespace HPP.Grid
         public Color BaseColour0;
         public Color HighlightColour0;
 
-        [Header("Varaint 1")]
+        [Header("Variant 1")]
         public Material BaseMaterial1;
         public Color BaseColour1;
         public Color HighlightColour1;

@@ -11,25 +11,25 @@ namespace HPP.Grid
     /// </summary>
     public class GridController : MonoBehaviour
     {
-        [SerializeField] private GameObject m_GridItemPrefab;
+        [SerializeField] private GameObject m_GridNodePrefab;
         [SerializeField] private int m_XCount = 2;
         [SerializeField] private int m_YCount = 2;
-        [SerializeField] private float m_GridItemSize = 1;
-        [SerializeField] private Transform m_GridItemContainer;
+        [SerializeField] private float m_GridNodeSize = 1;
+        [SerializeField] private Transform m_GridNodesContainer;
         [SerializeField] private BoxCollider m_BoxCollider;
-        [SerializeField] private List<GridItem> m_GridItems;
+        [SerializeField] private List<GridNode> m_GridNodes;
 
-        public List<GridItem> GridItems => m_GridItems;
-        private const float M_GRID_ITEM_Y_SCALE = 1;
+        public List<GridNode> GridNodes => m_GridNodes;
+        private const float M_GRID_NODE_Y_SCALE = 1;
         private bool m_IsBaseColour0 = false;
         
         [ContextMenu("GenerateGrid")]
         public void GenerateGrid()
         {
             ClearGrid();
-            if (m_GridItemContainer == null)
+            if (m_GridNodesContainer == null)
             {
-                m_GridItemContainer = this.transform;
+                m_GridNodesContainer = this.transform;
             }
 
             for (int x = 0; x < m_XCount; x++)
@@ -57,90 +57,90 @@ namespace HPP.Grid
                         universeType = UniverseType.Neutral;
                     }
 
-                    m_GridItems.Add(InitialiseGridItem(x,y, universeType));
+                    m_GridNodes.Add(InitialiseGridNode(x,y, universeType));
                     m_IsBaseColour0 = !m_IsBaseColour0;
                 }
             }
-            m_BoxCollider.size = new Vector3(m_XCount * m_GridItemSize, M_GRID_ITEM_Y_SCALE, m_YCount * m_GridItemSize);
+            m_BoxCollider.size = new Vector3(m_XCount * m_GridNodeSize, M_GRID_NODE_Y_SCALE, m_YCount * m_GridNodeSize);
         }
 
-        private GridItem InitialiseGridItem(int xRef, int yRef, UniverseType universeType = UniverseType.Neutral)
+        private GridNode InitialiseGridNode(int xRef, int yRef, UniverseType universeType = UniverseType.Neutral)
         {
-            GridItem newGridItem = Instantiate(m_GridItemPrefab).GetComponent<GridItem>();
-            newGridItem.gameObject.name = "G-" + xRef + "-" + yRef;
-            newGridItem.transform.localScale = new Vector3(m_GridItemSize, M_GRID_ITEM_Y_SCALE, m_GridItemSize);
-            float xPos = xRef - ((m_GridItemSize * m_XCount) / 2);
-            float yPos = yRef - ((m_GridItemSize * m_YCount) / 2);
-            newGridItem.SetListRefs(xRef, yRef);
-            newGridItem.SetLocalPosition(xPos, yPos);
-            newGridItem.transform.parent = m_GridItemContainer;
-            newGridItem.SetGridItemProperties(m_IsBaseColour0, universeType, InteractionType.Null);
-            return newGridItem;
+            GridNode newGridNode = Instantiate(m_GridNodePrefab).GetComponent<GridNode>();
+            newGridNode.gameObject.name = "G-" + xRef + "-" + yRef;
+            newGridNode.transform.localScale = new Vector3(m_GridNodeSize, M_GRID_NODE_Y_SCALE, m_GridNodeSize);
+            float xPos = xRef - ((m_GridNodeSize * m_XCount) / 2);
+            float yPos = yRef - ((m_GridNodeSize * m_YCount) / 2);
+            newGridNode.SetListRefs(xRef, yRef);
+            newGridNode.SetLocalPosition(xPos, yPos);
+            newGridNode.transform.parent = m_GridNodesContainer;
+            newGridNode.SetGridNodeProperties(m_IsBaseColour0, universeType, InteractionType.Null);
+            return newGridNode;
         }
 
         [ContextMenu("Clear Grid")]
         public void ClearGrid()
         {
-            if (m_GridItems == null || m_GridItems.Count == 0)
+            if (m_GridNodes == null || m_GridNodes.Count == 0)
             {
-                m_GridItems = new List<GridItem>();
+                m_GridNodes = new List<GridNode>();
                 return;
             }
 
-            for (int i = 0; i < m_GridItems.Count; i++)
+            for (int i = 0; i < m_GridNodes.Count; i++)
             {
-                if (m_GridItems[i].gameObject != null)
+                if (m_GridNodes[i].gameObject != null)
                 {
-                    DestroyImmediate(m_GridItems[i].gameObject);
+                    DestroyImmediate(m_GridNodes[i].gameObject);
                 }
 
             }
-            m_GridItems.Clear();
-            m_GridItems = new List<GridItem>();
+            m_GridNodes.Clear();
+            m_GridNodes = new List<GridNode>();
             m_BoxCollider.size = Vector3.zero;
         }
 
-        public GridItem GetClosestGridItemToPoint(Vector3 point)
+        public GridNode GetClosestGridNodeToPoint(Vector3 point)
         {
             float closestDistance = Mathf.Infinity;
-            GridItem closestGridItem = null;
-            for (int i = 0; i < m_GridItems.Count; i++)
+            GridNode closestGridNode = null;
+            for (int i = 0; i < m_GridNodes.Count; i++)
             {
-                if (m_GridItems[i].gameObject != null)
+                if (m_GridNodes[i].gameObject != null)
                 {
-                    float newDistance = Vector3.Distance(point, m_GridItems[i].transform.position);
+                    float newDistance = Vector3.Distance(point, m_GridNodes[i].transform.position);
                     if (newDistance < closestDistance)
                     {
-                        closestGridItem = m_GridItems[i];
+                        closestGridNode = m_GridNodes[i];
                         closestDistance = newDistance;
                     }
                 }
             }
-            return closestGridItem;
+            return closestGridNode;
         }
 
-        public GridItem GetClosestGridItemToPoint(Vector3 point, UniverseType ? universeType = null)
+        public GridNode GetClosestGridNodeToPoint(Vector3 point, UniverseType ? universeType = null)
         {
             float closestDistance = Mathf.Infinity;
-            GridItem closestGridItem = null;
-            for (int i = 0; i < m_GridItems.Count; i++)
+            GridNode closestGridNode = null;
+            for (int i = 0; i < m_GridNodes.Count; i++)
             {
-                if (universeType == null || (universeType != null && universeType == m_GridItems[i].GridUniverseType))
+                if (universeType == null || (universeType != null && universeType == m_GridNodes[i].GridUniverseType))
                 {
-                    float newDistance = Vector3.Distance(point, m_GridItems[i].transform.position);
+                    float newDistance = Vector3.Distance(point, m_GridNodes[i].transform.position);
                     if (newDistance < closestDistance)
                     {
-                        closestGridItem = m_GridItems[i];
+                        closestGridNode = m_GridNodes[i];
                         closestDistance = newDistance;
                     }
                 }
             }
-            return closestGridItem;
+            return closestGridNode;
         }
 
-        public List<GridItem> GetAdjacentGridItems(GridItem gridItem, bool useDiagonal = true)
+        public List<GridNode> GetAdjacentGridNodes(GridNode gridItem, bool useDiagonal = true)
         {
-            List<GridItem> adjacentGridItems = new List<GridItem>();
+            List<GridNode> adjacentGridNodes = new List<GridNode>();
             List<Vector2> searchCases = new List<Vector2>();
 
             int baseX = gridItem.XRef;
@@ -161,33 +161,24 @@ namespace HPP.Grid
 
             foreach (Vector2 searchCase in searchCases)
             {
-                GridItem potentialGridItem = SearchForGridItemByListRef(
+                GridNode potentialGridNode = SearchForGridNodeByListRef(
                     (int)searchCase.x, (int)searchCase.y);
-                if (potentialGridItem != null)
+                if (potentialGridNode != null)
                 {
-                    adjacentGridItems.Add(potentialGridItem);
+                    adjacentGridNodes.Add(potentialGridNode);
                 }
             }
 
-            return adjacentGridItems;
+            return adjacentGridNodes;
         }
 
-        //private bool ValidateListRef(int xRef, int yRef)
-        //{
-        //    if (xRef < 0 || xRef >= m_XCount)
-        //        return false;
-        //    if (yRef < 0 || yRef >= m_YCount)
-        //        return false;
-        //    return true;
-        //}
-
-        private GridItem SearchForGridItemByListRef(int xRef, int yRef)
+        private GridNode SearchForGridNodeByListRef(int xRef, int yRef)
         {
-            for (int i = 0; i < m_GridItems.Count; i++)
+            for (int i = 0; i < m_GridNodes.Count; i++)
             {
-                if (m_GridItems[i].XRef == xRef && m_GridItems[i].YRef == yRef)
+                if (m_GridNodes[i].XRef == xRef && m_GridNodes[i].YRef == yRef)
                 {
-                    return m_GridItems[i];
+                    return m_GridNodes[i];
                 }
             }
             return null;

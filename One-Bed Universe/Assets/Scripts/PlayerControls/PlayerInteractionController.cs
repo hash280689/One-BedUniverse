@@ -18,12 +18,11 @@ namespace HPP.PlayerControls
         [SerializeField] private CursorBehaviourController m_3DCursor;
         [SerializeField] private float m_MaxRayDistance = 10;
 
-        private GridItem m_CurrentGridItem = null;
-        //private GridController currentGridController = null;
+        private GridNode m_CurrentGridNode = null;
         private UniverseType m_CurrentPlayerUniverseType;
 
         private RaycastHit? m_FirstPassRaycastHit = null;
-        private List<GridItem> m_HighlightedGridItems = new List<GridItem>();
+        private List<GridNode> m_HighlightedGridNodes = new List<GridNode>();
 
         private void Awake()
         {
@@ -43,7 +42,7 @@ namespace HPP.PlayerControls
             if (Input.GetMouseButtonDown(0))
             {
                 DoReclaimationAction();
-                m_CurrentGridItem = null;
+                m_CurrentGridNode = null;
             }
         }
 
@@ -62,24 +61,24 @@ namespace HPP.PlayerControls
                 GridController gridController = m_FirstPassRaycastHit.Value.transform.GetComponent<GridController>();
                 if (gridController)
                 {
-                    GridItem closestGridItem = gridController.GetClosestGridItemToPoint(m_FirstPassRaycastHit.Value.point, m_CurrentPlayerUniverseType);
-                    if (closestGridItem == m_CurrentGridItem)
+                    GridNode closestGridItem = gridController.GetClosestGridNodeToPoint(m_FirstPassRaycastHit.Value.point, m_CurrentPlayerUniverseType);
+                    if (closestGridItem == m_CurrentGridNode)
                     {
                         return;
                     }
 
-                    m_3DCursor.SetToGridItem(closestGridItem);
+                    m_3DCursor.SetToGridNode(closestGridItem);
 
                     //FOR TESTING
                     DoReclaimationHighlight(gridController, closestGridItem);
                     
                     //End FOR TESTING
 
-                    m_CurrentGridItem = closestGridItem;
+                    m_CurrentGridNode = closestGridItem;
                 }
                 else
                 {
-                    if (m_CurrentGridItem == null)
+                    if (m_CurrentGridNode == null)
                     {
                         SetCursorToEndOfRay();
                     }
@@ -87,42 +86,42 @@ namespace HPP.PlayerControls
             }
             else
             {
-                if (m_CurrentGridItem == null)
+                if (m_CurrentGridNode == null)
                 {
                     SetCursorToEndOfRay();
                 }
             }
         }
 
-        private void DoReclaimationHighlight(GridController gridController, GridItem gridItem)
+        private void DoReclaimationHighlight(GridController gridController, GridNode gridItem)
         {
-            for (int i = 0; i < gridController.GridItems.Count; i++)
+            for (int i = 0; i < gridController.GridNodes.Count; i++)
             {
-                gridController.GridItems[i].SetInteractiveStatus(InteractionType.DefaultState);
+                gridController.GridNodes[i].SetInteractiveStatus(InteractionType.DefaultState);
             }
-            m_HighlightedGridItems.Clear();
+            m_HighlightedGridNodes.Clear();
 
             gridItem.SetInteractiveStatus(InteractionType.Reclaimable);
-            m_HighlightedGridItems.Add(gridItem);
+            m_HighlightedGridNodes.Add(gridItem);
 
-            var adjacentTiles = gridController.GetAdjacentGridItems(gridItem, true);
+            var adjacentTiles = gridController.GetAdjacentGridNodes(gridItem, true);
             for (int i = 0; i < adjacentTiles.Count; i++)
             {
                 adjacentTiles[i].SetInteractiveStatus(InteractionType.Reclaimable);
-                m_HighlightedGridItems.Add(adjacentTiles[i]);
+                m_HighlightedGridNodes.Add(adjacentTiles[i]);
             }
         }    
 
         private void DoReclaimationAction()
         {
-            if (m_FirstPassRaycastHit == null || m_HighlightedGridItems.Count == 0)
+            if (m_FirstPassRaycastHit == null || m_HighlightedGridNodes.Count == 0)
             {
                 return;
             }
 
-            for (int i = 0; i < m_HighlightedGridItems.Count; i++)
+            for (int i = 0; i < m_HighlightedGridNodes.Count; i++)
             {
-                m_HighlightedGridItems[i].SetUniverseType(m_CurrentPlayerUniverseType);
+                m_HighlightedGridNodes[i].SetUniverseType(m_CurrentPlayerUniverseType);
             }
         }
 
