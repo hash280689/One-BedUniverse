@@ -27,6 +27,9 @@ namespace HPP.Grid
 
         [SerializeField] private int m_XRef;
         [SerializeField] private int m_YRef;
+        private GridNode m_PreviouslyTravelledNode = null;
+
+        public AdjacentGridNodes AdjacentGridNodes;
 
         public int XRef => m_XRef;
         public int YRef => m_YRef;
@@ -68,6 +71,11 @@ namespace HPP.Grid
             return colourVariant == ColourVariant.Variant0 ?
                 colourPallete.HighlightColour0 :
                 colourPallete.HighlightColour1;
+        }
+
+        public GridNode GetPreviouslyTravelledNode()
+        {
+            return m_PreviouslyTravelledNode;
         }
 
         public void SetListRefs(int xRef, int yRef)
@@ -138,5 +146,65 @@ namespace HPP.Grid
         {
             transform.localPosition = newPosition;
         }
+
+        public List<GridNode> GetAdjacentNodes(bool useDiagonal = true, bool onlyMyUniverse = false)
+        { 
+            List<GridNode> adjacentGridNodes = new List<GridNode>();
+            if (AdjacentGridNodes.NorthGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.NorthGN);
+            }
+            if (AdjacentGridNodes.SouthGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.SouthGN);
+            }
+            if (AdjacentGridNodes.EastGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.EastGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.EastGN);
+            }
+            if (AdjacentGridNodes.WestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.WestGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.WestGN);
+            }
+
+            if (useDiagonal)
+            {
+                if (AdjacentGridNodes.NorthEastGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthEastGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.NorthEastGN);
+                }
+                if (AdjacentGridNodes.SouthEastGN != null &&  (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthEastGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.SouthEastGN);
+                }
+                if (AdjacentGridNodes.SouthWestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthWestGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.SouthWestGN);
+                }
+                if (AdjacentGridNodes.NorthWestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthWestGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.NorthWestGN);
+                }
+            }
+
+            return adjacentGridNodes;
+        }
+
     }
+
+    [System.Serializable]
+    public struct AdjacentGridNodes
+    {
+        public GridNode NorthGN;
+        public GridNode SouthGN;
+        public GridNode EastGN;
+        public GridNode WestGN;
+
+        public GridNode NorthEastGN;
+        public GridNode SouthEastGN;
+        public GridNode SouthWestGN;
+        public GridNode NorthWestGN;
+    }
+
 }
+

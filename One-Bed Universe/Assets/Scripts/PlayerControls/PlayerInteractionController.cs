@@ -93,18 +93,19 @@ namespace HPP.PlayerControls
             }
         }
 
-        private void DoReclaimationHighlight(GridController gridController, GridNode gridItem)
+        private void DoReclaimationHighlight(GridController gridController, GridNode gridNode)
         {
             for (int i = 0; i < gridController.GridNodes.Count; i++)
             {
                 gridController.GridNodes[i].SetInteractiveStatus(InteractionType.DefaultState);
+                gridController.SetAdjacentGridNodes(gridController.GridNodes[i]);
             }
             m_HighlightedGridNodes.Clear();
 
-            gridItem.SetInteractiveStatus(InteractionType.Reclaimable);
-            m_HighlightedGridNodes.Add(gridItem);
+            gridNode.SetInteractiveStatus(InteractionType.Reclaimable);
+            m_HighlightedGridNodes.Add(gridNode);
 
-            var adjacentTiles = gridController.GetAdjacentGridNodes(gridItem, true);
+            var adjacentTiles = gridNode.GetAdjacentNodes(true);
             for (int i = 0; i < adjacentTiles.Count; i++)
             {
                 adjacentTiles[i].SetInteractiveStatus(InteractionType.Reclaimable);

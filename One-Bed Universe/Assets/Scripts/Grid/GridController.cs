@@ -75,6 +75,7 @@ namespace HPP.Grid
             newGridNode.SetLocalPosition(xPos, yPos);
             newGridNode.transform.parent = m_GridNodesContainer;
             newGridNode.SetGridNodeProperties(m_IsBaseColour0, universeType, InteractionType.Null);
+            SetAdjacentGridNodes(newGridNode);
             return newGridNode;
         }
 
@@ -138,39 +139,6 @@ namespace HPP.Grid
             return closestGridNode;
         }
 
-        public List<GridNode> GetAdjacentGridNodes(GridNode gridItem, bool useDiagonal = true)
-        {
-            List<GridNode> adjacentGridNodes = new List<GridNode>();
-            List<Vector2> searchCases = new List<Vector2>();
-
-            int baseX = gridItem.XRef;
-            int baseY = gridItem.YRef;
-
-            searchCases.Add(new Vector2(baseX, baseY + 1));
-            searchCases.Add(new Vector2(baseX, baseY - 1));
-            searchCases.Add(new Vector2(baseX + 1, baseY));
-            searchCases.Add(new Vector2(baseX - 1, baseY));
-
-            if(useDiagonal)
-            {
-                searchCases.Add(new Vector2(baseX + 1, baseY + 1));
-                searchCases.Add(new Vector2(baseX - 1, baseY - 1));
-                searchCases.Add(new Vector2(baseX + 1, baseY - 1));
-                searchCases.Add(new Vector2(baseX - 1, baseY + 1));
-            }
-
-            foreach (Vector2 searchCase in searchCases)
-            {
-                GridNode potentialGridNode = SearchForGridNodeByListRef(
-                    (int)searchCase.x, (int)searchCase.y);
-                if (potentialGridNode != null)
-                {
-                    adjacentGridNodes.Add(potentialGridNode);
-                }
-            }
-
-            return adjacentGridNodes;
-        }
 
         private GridNode SearchForGridNodeByListRef(int xRef, int yRef)
         {
@@ -183,5 +151,23 @@ namespace HPP.Grid
             }
             return null;
         }
+
+        public void SetAdjacentGridNodes(GridNode gridNode)
+        {
+            int baseX = gridNode.XRef;
+            int baseY = gridNode.YRef;
+
+            gridNode.AdjacentGridNodes = new AdjacentGridNodes
+            {
+                NorthGN = SearchForGridNodeByListRef(baseX, baseY + 1),
+                SouthGN = SearchForGridNodeByListRef(baseX, baseY - 1),
+                EastGN = SearchForGridNodeByListRef(baseX + 1, baseY),
+                WestGN = SearchForGridNodeByListRef(baseX - 1, baseY),
+                NorthEastGN = SearchForGridNodeByListRef(baseX + 1, baseY + 1),
+                SouthEastGN = SearchForGridNodeByListRef(baseX + 1, baseY - 1),
+                SouthWestGN = SearchForGridNodeByListRef(baseX - 1, baseY - 1),
+                NorthWestGN = SearchForGridNodeByListRef(baseX - 1, baseY + 1)
+            };
+        }    
     }
 }
