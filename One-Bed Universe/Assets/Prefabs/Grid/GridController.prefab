@@ -75,13 +75,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017a9b13963003d44b4617430e1356fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GridItemPrefab: {fileID: 167577177701763124, guid: 87b82d62365663b47a14f423e1cdeb19, type: 3}
+  m_GridNodePrefab: {fileID: 167577177701763124, guid: 87b82d62365663b47a14f423e1cdeb19, type: 3}
   m_XCount: 20
   m_YCount: 20
-  m_GridItemSize: 1
-  m_GridItemContainer: {fileID: 4787913593233762491}
+  m_GridNodeSize: 1
+  m_GridNodesContainer: {fileID: 4787913593233762491}
   m_BoxCollider: {fileID: 5433170865375771785}
-  m_GridItems: []
+  m_GridNodes: []
 --- !u!65 &5433170865375771785
 BoxCollider:
   m_ObjectHideFlags: 0

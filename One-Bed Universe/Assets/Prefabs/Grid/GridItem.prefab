@@ -97,5 +97,8 @@ MonoBehaviour:
   m_NeutralPallete: {fileID: 11400000, guid: 31430b09cc362a74f924a85915aa4140, type: 2}
   m_UAColourPallete: {fileID: 11400000, guid: 08a4320689735f641a26b651b5958f14, type: 2}
   m_UBColourPallete: {fileID: 11400000, guid: 4c97b622c3e95c4428b24274d608fe08, type: 2}
-  m_GridItemMeshRenderer: {fileID: 2952752965754934671}
-  m_HoverRenderer: {fileID: 0}
+  m_GridNodeMeshRenderer: {fileID: 2952752965754934671}
+  m_UniverseType: 0
+  m_ColourVariant: 0
+  m_XRef: 0
+  m_YRef: 0

@@ -10,12 +10,12 @@ namespace HPP.Grid
     /// </summary>
     /// 
 
-    public class GridItem : MonoBehaviour
+    public class GridNode : MonoBehaviour
     {
         [SerializeField] GridColourPallete m_NeutralPallete;
         [SerializeField] GridColourPallete m_UAColourPallete;
         [SerializeField] GridColourPallete m_UBColourPallete;
-        [SerializeField] MeshRenderer m_GridItemMeshRenderer;
+        [SerializeField] MeshRenderer m_GridNodeMeshRenderer;
 
         public enum ColourVariant { Variant0, Variant1}
 
@@ -27,6 +27,9 @@ namespace HPP.Grid
 
         [SerializeField] private int m_XRef;
         [SerializeField] private int m_YRef;
+        private GridNode m_PreviouslyTravelledNode = null;
+
+        public AdjacentGridNodes AdjacentGridNodes;
 
         public int XRef => m_XRef;
         public int YRef => m_YRef;
@@ -70,15 +73,20 @@ namespace HPP.Grid
                 colourPallete.HighlightColour1;
         }
 
+        public GridNode GetPreviouslyTravelledNode()
+        {
+            return m_PreviouslyTravelledNode;
+        }
+
         public void SetListRefs(int xRef, int yRef)
         {
             m_XRef = xRef;
             m_YRef = yRef;
         }
 
-        public void SetGridItemProperties(ColourVariant colourVariant, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
+        public void SetGridNodeProperties(ColourVariant colourVariant, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
-            m_GridItemMeshRenderer.material = GetBaseMaterial(colourVariant, universeType);
+            m_GridNodeMeshRenderer.material = GetBaseMaterial(colourVariant, universeType);
             if (interactionType != InteractionType.Null)
             {
                 SetInteractiveStatus(interactionType);
@@ -87,9 +95,9 @@ namespace HPP.Grid
             m_ColourVariant = colourVariant;
         }
 
-        public void SetGridItemProperties(bool isBaseColour0, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
+        public void SetGridNodeProperties(bool isBaseColour0, UniverseType universeType, InteractionType interactionType = InteractionType.DefaultState)
         {
-            SetGridItemProperties(isBaseColour0 ? ColourVariant.Variant0 : ColourVariant.Variant1, universeType, interactionType);
+            SetGridNodeProperties(isBaseColour0 ? ColourVariant.Variant0 : ColourVariant.Variant1, universeType, interactionType);
         }
 
         public void SetInteractiveStatus(InteractionType interactionType)
@@ -97,26 +105,26 @@ namespace HPP.Grid
             switch (interactionType)
             {
                 case InteractionType.DefaultState:
-                    m_GridItemMeshRenderer.material.color = GetBaseColour(m_ColourVariant, m_UniverseType);
+                    m_GridNodeMeshRenderer.material.color = GetBaseColour(m_ColourVariant, m_UniverseType);
                     break;
                 case InteractionType.BasicTileHit:
                     //break;
                 case InteractionType.Interactable:
                     //break;
                 case InteractionType.Reclaimable:
-                    m_GridItemMeshRenderer.material.color = GetHighlightColour(m_ColourVariant, m_UniverseType);
+                    m_GridNodeMeshRenderer.material.color = GetHighlightColour(m_ColourVariant, m_UniverseType);
                     break;
             }
         }
 
         public void SetUniverseType(UniverseType universeType)
         {
-            SetGridItemProperties(m_ColourVariant, universeType);
+            SetGridNodeProperties(m_ColourVariant, universeType);
         }
         
         public void SetColourVariant(ColourVariant colourVariant)
         {
-            SetGridItemProperties(colourVariant, m_UniverseType);
+            SetGridNodeProperties(colourVariant, m_UniverseType);
         }    
 
         public void SetColourVariant(bool isBaseColour0)
@@ -138,5 +146,65 @@ namespace HPP.Grid
         {
             transform.localPosition = newPosition;
         }
+
+        public List<GridNode> GetAdjacentNodes(bool useDiagonal = true, bool onlyMyUniverse = false)
+        { 
+            List<GridNode> adjacentGridNodes = new List<GridNode>();
+            if (AdjacentGridNodes.NorthGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.NorthGN);
+            }
+            if (AdjacentGridNodes.SouthGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.SouthGN);
+            }
+            if (AdjacentGridNodes.EastGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.EastGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.EastGN);
+            }
+            if (AdjacentGridNodes.WestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.WestGN.m_UniverseType == m_UniverseType)))
+            {
+                adjacentGridNodes.Add(AdjacentGridNodes.WestGN);
+            }
+
+            if (useDiagonal)
+            {
+                if (AdjacentGridNodes.NorthEastGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthEastGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.NorthEastGN);
+                }
+                if (AdjacentGridNodes.SouthEastGN != null &&  (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthEastGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.SouthEastGN);
+                }
+                if (AdjacentGridNodes.SouthWestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.SouthWestGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.SouthWestGN);
+                }
+                if (AdjacentGridNodes.NorthWestGN != null && (!onlyMyUniverse || (onlyMyUniverse && AdjacentGridNodes.NorthWestGN.m_UniverseType == m_UniverseType)))
+                {
+                    adjacentGridNodes.Add(AdjacentGridNodes.NorthWestGN);
+                }
+            }
+
+            return adjacentGridNodes;
+        }
+
     }
+
+    [System.Serializable]
+    public struct AdjacentGridNodes
+    {
+        public GridNode NorthGN;
+        public GridNode SouthGN;
+        public GridNode EastGN;
+        public GridNode WestGN;
+
+        public GridNode NorthEastGN;
+        public GridNode SouthEastGN;
+        public GridNode SouthWestGN;
+        public GridNode NorthWestGN;
+    }
+
 }
+

@@ -30,7 +30,7 @@ namespace HPP.PlayerControls
         private UniverseType m_CurrentUniverseType;
         private InteractionType m_CurrentInteractionType;
 
-        public void SetToGridItem(GridItem gridItem)
+        public void SetToGridNode(GridNode gridItem)
         {
             transform.position = gridItem.transform.position + (Vector3.up * (gridItem.transform.localScale.y + m_YOffset)); 
 
