@@ -24,12 +24,8 @@ namespace HPP.PlayerControls
         private RaycastHit? m_FirstPassRaycastHit = null;
         private List<GridNode> m_HighlightedGridNodes = new List<GridNode>();
 
-        private void Awake()
+        private void Start()
         {
-            if (m_PlayerCam == null)
-            {
-                m_PlayerCam.GetComponent<Camera>();
-            }
             m_CurrentPlayerUniverseType = GameManager.Instance.CurrentPlayerUniverseType;
             GameManager.Instance.OnPlayerChanged += OnPlayerChanged;
         }
