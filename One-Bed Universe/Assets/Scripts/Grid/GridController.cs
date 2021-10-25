@@ -61,7 +61,18 @@ namespace HPP.Grid
                     m_IsBaseColour0 = !m_IsBaseColour0;
                 }
             }
+
+            SetAllAdjacentGridNodes();
             m_BoxCollider.size = new Vector3(m_XCount * m_GridNodeSize, M_GRID_NODE_Y_SCALE, m_YCount * m_GridNodeSize);
+        }
+
+        [ContextMenu("SetAllAdjacentGridNodes")]
+        public void SetAllAdjacentGridNodes()
+        {
+            foreach (GridNode gridNode in m_GridNodes)
+            {
+                SetAdjacentGridNodes(gridNode);
+            }
         }
 
         private GridNode InitialiseGridNode(int xRef, int yRef, UniverseType universeType = UniverseType.Neutral)
@@ -75,7 +86,6 @@ namespace HPP.Grid
             newGridNode.SetLocalPosition(xPos, yPos);
             newGridNode.transform.parent = m_GridNodesContainer;
             newGridNode.SetGridNodeProperties(m_IsBaseColour0, universeType, InteractionType.Null);
-            SetAdjacentGridNodes(newGridNode);
             return newGridNode;
         }
 
