@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static HPP.GlobalEnums;
+using HPP.Player;
+using HPP.Grid;
 
 namespace HPP.GameFlow
 {
@@ -12,11 +14,32 @@ namespace HPP.GameFlow
 
     public class GameManager : MonoBehaviour
     {
+        [Serializable]
+        public class PlayerInitialisationConfig
+        {
+            public string Lable;
+            public OBBPlayer Player;
+            public GridNode StartingGridNode;
+
+            public void Initialise()
+            {
+                Player.gameObject.SetActive(true);
+                Player.PlaceOnGridNode(StartingGridNode);   
+            }
+        }
+
         public static GameManager Instance;
 
         public Action<UniverseType> OnPlayerChanged;
 
-        [SerializeField] private UniverseType m_CurrentPlayerType;
+        [SerializeField] 
+        private UniverseType m_CurrentPlayerType;
+        [SerializeField] 
+        private PlayerInitialisationConfig m_PlayerA;
+        [SerializeField] 
+        private PlayerInitialisationConfig m_PlayerB;
+
+        
 
         public UniverseType CurrentPlayerUniverseType => m_CurrentPlayerType;
 
@@ -31,7 +54,9 @@ namespace HPP.GameFlow
                 Destroy(this);
             }
 
-            OnPlayerChanged?.Invoke(m_CurrentPlayerType);
+            m_PlayerA.Initialise();
+            m_PlayerB.Initialise();
+            SetPlayerType(m_CurrentPlayerType);
         }
 
         public void SetPlayerType(UniverseType universeType)

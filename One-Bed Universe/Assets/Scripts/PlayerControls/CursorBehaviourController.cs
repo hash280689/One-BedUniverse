@@ -1,4 +1,5 @@
 using HPP.Grid;
+using HPP.Interface;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,9 @@ namespace HPP.PlayerControls
     /// <summary>
     /// Controls for governing the behaviour of the cursor
     /// </summary>
-    public class CursorBehaviourController : MonoBehaviour
+    public class CursorBehaviourController : MonoBehaviour, IGridPlaceable
     {
         private InteractionType m_InteractionType;
-
-        [SerializeField] private float m_YOffset = 0;
 
         [Header("Universe State")]
         public UnityEvent OnNeutral;
@@ -30,11 +29,7 @@ namespace HPP.PlayerControls
         private UniverseType m_CurrentUniverseType;
         private InteractionType m_CurrentInteractionType;
 
-        public void SetToGridNode(GridNode gridItem)
-        {
-            transform.position = gridItem.transform.position + (Vector3.up * (gridItem.transform.localScale.y + m_YOffset)); 
-
-        }
+        public float YOffset { get; set; }
 
         public void SetUniverseType(UniverseType universeType, bool force = false)
         {
@@ -83,6 +78,11 @@ namespace HPP.PlayerControls
             }
 
             m_CurrentInteractionType = interactionType;
+        }
+
+        public void PlaceOnGridNode(GridNode gridItem)
+        {
+            transform.position = gridItem.transform.position + (Vector3.up * (gridItem.transform.localScale.y + YOffset));
         }
     }
 }
