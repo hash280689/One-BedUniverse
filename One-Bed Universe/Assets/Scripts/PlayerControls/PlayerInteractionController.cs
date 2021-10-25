@@ -63,7 +63,7 @@ namespace HPP.PlayerControls
                         return;
                     }
 
-                    m_3DCursor.SetToGridNode(closestGridItem);
+                    m_3DCursor.PlaceOnGridNode(closestGridItem);
 
                     //FOR TESTING
                     DoReclaimationHighlight(gridController, closestGridItem);
